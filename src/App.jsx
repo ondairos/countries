@@ -14,6 +14,7 @@ function App() {
     });
   }, []);
 
+  // search logic
   const countriesToShow =
     showCountries !== ""
       ? countries.filter((element) => {
