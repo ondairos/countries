@@ -3,7 +3,9 @@ import React from "react";
 export const Countries = (props) => {
   return (
     <div>
-      {props.countriesToShow.length > 10 ? (
+      {props.countriesToShow.length == 1 ? (
+        <p>1 country!</p>
+      ) : props.countriesToShow.length > 10 ? (
         <p>Search the country you want.</p>
       ) : (
         <ul>
