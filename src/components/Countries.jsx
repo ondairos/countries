@@ -40,7 +40,6 @@ export const Countries = (props) => {
           <p>Chios Temperature: {weather.main.temp}</p>
           <p>Chios Pressure: {weather.main.pressure}</p>
           <p>Chios Humidity: {weather.main.humidity}</p>
-          {console.log(weather.main)}
         </>
       ) : props.countriesToShow.length > 10 ? (
         <p>Search the country you want.</p>
