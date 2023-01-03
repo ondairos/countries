@@ -18,18 +18,20 @@ export const Countries = (props) => {
   // get api data from openweathermap api
   useEffect(() => {
     // create array of promises for the API requests
-    const promises = props.countriesToShow.map((element) => {
-      return axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${element.capital}&appid=${weather_api_key}`
-      );
-    });
+    if (props.countriesToShow.length === 1) {
+      const promises = props.countriesToShow.map((element) => {
+        return axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${element.capital}&appid=${weather_api_key}`
+        );
+      });
 
-    // wait for all of the promises to complete
-    Promise.all(promises).then((results) => {
-      // set the weather state to the data from the API
-      setWeather(results.map((result) => result.data));
-    });
-  }, []);
+      // wait for all of the promises to complete
+      Promise.all(promises).then((results) => {
+        // set the weather state to the data from the API
+        setWeather(results.map((result) => result.data));
+      });
+    }
+  }, [props.countriesToShow]);
 
   return (
     <div>
@@ -48,6 +50,7 @@ export const Countries = (props) => {
           <img src={props.countriesToShow[0].flags.png} alt="" />
           {weather && weather.length > 0 ? (
             <>
+              <p>Capital: {weather[0].name}</p>
               <p>Temperature: {weather[0].main.temp}</p>
               <p>Pressure: {weather[0].main.pressure}</p>
               <p>Humidity: {weather[0].main.humidity}</p>
