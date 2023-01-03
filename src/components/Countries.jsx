@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-const weather_api_key = import.meta.env.VITE_TEST_VAR;
 import axios from "axios";
 
+const weather_api_key = import.meta.env.VITE_TEST_VAR;
 
 export const Countries = (props) => {
   // country selection state
@@ -15,12 +15,21 @@ export const Countries = (props) => {
     setSelectedCountry(selectedCountry === country ? null : country);
   }
 
-    // get api data from openweather api
-    useEffect(() => {
-      axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=38.37581315&lon=26.064655246170453&appid=${weather_api_key}`).then((res) => {
-        setWeather(res.data);
-      });
-    }, []);
+  // get api data from openweathermap api
+  useEffect(() => {
+    // create array of promises for the API requests
+    const promises = props.countriesToShow.map((element) => {
+      return axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${element.capital}&appid=${weather_api_key}`
+      );
+    });
+
+    // wait for all of the promises to complete
+    Promise.all(promises).then((results) => {
+      // set the weather state to the data from the API
+      setWeather(results.map((result) => result.data));
+    });
+  }, []);
 
   return (
     <div>
@@ -37,9 +46,15 @@ export const Countries = (props) => {
             ))}
           </p>
           <img src={props.countriesToShow[0].flags.png} alt="" />
-          <p>Chios Temperature: {weather.main.temp}</p>
-          <p>Chios Pressure: {weather.main.pressure}</p>
-          <p>Chios Humidity: {weather.main.humidity}</p>
+          {weather && weather.length > 0 ? (
+            <>
+              <p>Temperature: {weather[0].main.temp}</p>
+              <p>Pressure: {weather[0].main.pressure}</p>
+              <p>Humidity: {weather[0].main.humidity}</p>
+            </>
+          ) : (
+            <p>No weather data available</p>
+          )}
         </>
       ) : props.countriesToShow.length > 10 ? (
         <p>Search the country you want.</p>
