@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+const weather_api_key = import.meta.env.VITE_TEST_VAR;
+import axios from "axios";
+
 
 export const Countries = (props) => {
   // country selection state
   const [selectedCountry, setSelectedCountry] = useState(null);
+  // weather state
+  const [weather, setWeather] = useState(null);
 
   // toggle clicked for button
   function handleClick(country) {
-    // set the state to null when the "Hide" button is clicked, which will hide the country details. 
+    // set the state to null when the "Hide" button is clicked, which will hide the country details.
     setSelectedCountry(selectedCountry === country ? null : country);
   }
+
+    // get api data from openweather api
+    useEffect(() => {
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=38.37581315&lon=26.064655246170453&appid=${weather_api_key}`).then((res) => {
+        setWeather(res.data);
+      });
+    }, []);
 
   return (
     <div>
@@ -25,6 +37,10 @@ export const Countries = (props) => {
             ))}
           </p>
           <img src={props.countriesToShow[0].flags.png} alt="" />
+          <p>Chios Temperature: {weather.main.temp}</p>
+          <p>Chios Pressure: {weather.main.pressure}</p>
+          <p>Chios Humidity: {weather.main.humidity}</p>
+          {console.log(weather.main)}
         </>
       ) : props.countriesToShow.length > 10 ? (
         <p>Search the country you want.</p>
