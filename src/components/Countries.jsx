@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 
 export const Countries = (props) => {
-  const [clicked, setClicked] = useState(false);
-  console.log(clicked);
+  // country selection state
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
-  function handleClick() {
-    return setClicked((prevClicked) => !prevClicked);
+  // toggle clicked for button
+  function handleClick(country) {
+    // set the state to null when the "Hide" button is clicked, which will hide the country details. 
+    setSelectedCountry(selectedCountry === country ? null : country);
   }
 
   return (
@@ -31,8 +33,11 @@ export const Countries = (props) => {
           {props.countriesToShow.map((element) => {
             return (
               <li key={element.name}>
-                {element.name} <button onClick={handleClick}>Show</button>
-                {clicked ? (
+                {element.name}{" "}
+                <button onClick={() => handleClick(element)}>
+                  {selectedCountry === element ? "Hide" : "Show"}
+                </button>
+                {selectedCountry === element ? (
                   <>
                     <p>Name: {element.name}</p>
                     <p>Capital: {element.capital}</p>
@@ -40,9 +45,7 @@ export const Countries = (props) => {
                     {/* use .languages.map() to extract the name of the language */}
                     <p>
                       <b>Languages</b>:{" "}
-                      {element.languages.map((country) => (
-                        country.name
-                      ))}
+                      {element.languages.map((country) => country.name + " ")}
                     </p>
                     <img src={element.flags.png} alt="" />
                   </>
