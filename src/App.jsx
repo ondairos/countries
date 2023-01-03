@@ -14,6 +14,8 @@ function App() {
     });
   }, []);
 
+  // search logic
+
   const countriesToShow =
     showCountries !== ""
       ? countries.filter((element) => {
@@ -22,6 +24,7 @@ function App() {
             .includes(showCountries.toLowerCase());
         })
       : countries;
+
 
   function handleCountryChange(event) {
     event.preventDefault();
@@ -37,7 +40,7 @@ function App() {
       </p>
       <div>
         <ul>
-          <Countries data={countries}  countriesToShow={countriesToShow}/>
+          <Countries data={countries} countriesToShow={countriesToShow} />
         </ul>
       </div>
     </div>
