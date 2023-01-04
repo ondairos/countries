@@ -1,14 +1,30 @@
-## React project showing Countries info
+# React project showing Countries info
 
-Using React and restcountries API [https://restcountries.com/#api-endpoints-v2-all]
-Implementing a search function that will display country info.
+Countries App
 
+A web application that allows you to:
 
-## Build with Vite []
+- View a list of countries
+- Search for a country by name
 
-## Commands
+## Installation
 
-```
- npm install
- npm run dev
-```
+Clone the repository
+
+    git clone https://github.com/YOUR-USERNAME/countries
+
+Install dependencies
+
+    npm install
+
+Start the development server
+
+    npm start
+
+## Usage
+
+Enter a country name in the search field to filter the list of countries.
+
+## Credits
+
+Built with React and data from the REST Countries API.
